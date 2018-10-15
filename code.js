@@ -1,9 +1,22 @@
 // It should store the todos array on an object
 var todoList = {
   todos: [],
-  // It should have a displayTodos method
+  // .displayTodos should show .todoText
+  // .displayTodos should tell if .todos is empty
+  // .displayTodos should show .completed
   displayTodos: function() {
-    console.log('My Todos:', this.todos);
+    if (this.todos.length === 0) {
+      console.log('Your todo list is empty.')
+    } else {
+      console.log('My Todos:');
+      for (var i = 0; i < this.todos.length, i++) {
+        if (this.todos[i].completed === true) {
+          console.log('(x)', this.todos[i].todoText);
+        } else {
+          console.log('( )', this.todos[i].todoText);
+        }
+      }
+    }
   },
   // todoList.addTodo should add objects
   addTodo: function(todoText) {
