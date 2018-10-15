@@ -22,7 +22,7 @@ var todoList = {
   addTodo: function(todoText) {
     this.todos.push({
       todoText: todoText,
-      completed: false;
+      completed: false
     });
     this.displayTodos();
   },
@@ -41,7 +41,7 @@ var todoList = {
     var todo = this.todos[position];
     todo.completed = !todo.completed;
     this.displayTodos();
-  }
+  },
   // .toggleAll: if everything’s true, make everything false
   // .toggleAll: otherwise, make everything true
   toggleAll: function() {
@@ -64,3 +64,16 @@ var todoList = {
     this.displayTodos();
   }
 };
+
+// Clicking “Display todos” should run todoList.displayTodos
+// Clicking “Toggle all” should run todoList.toggleAll
+
+var displayTodosButton = document.getElementById('displayTodosButton');
+displayTodosButton.addEventListener('click', function() {
+  todoList.displayTodos();
+});
+
+var toggleAllButton = document.getElementById('toggleAllButton');
+toggleAllButton.addEventListener('click', function() {
+  todoList.toggleAll();
+});
