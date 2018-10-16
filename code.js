@@ -23,23 +23,27 @@ var todoList = {
   },
   // .toggleAll: if everything’s true, make everything false
   // .toggleAll: otherwise, make everything true
+  // todoList.toggleAll should use forEach
   toggleAll: function() {
     var totalTodos = this.todos.length;
     var completedTodos = 0;
-    for (var i = 0; i < totalTodos; i++) {
-      if (this.todos[i].completed === true) {
+
+    // Get number of completed todos.
+    this.todos.forEach(function(todo) {
+      if (todo.completed === true) {
         completedTodos++;
       }
-    }
-    if (completedTodos === totalTodos) {
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = false;
-      }
-    } else {
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = true;
-      }
-    }
+    });
+
+    this.todos.forEach(function(todo) {
+      // Case 1: If everything’s true, make everything false.
+      if (completedTodos === totalTodos) {
+          todo.completed = false;
+      // Case 2: Otherwise, make everything true.
+        } else {
+          todo.completed = true;
+        }
+    });
   }
 };
 
@@ -83,15 +87,13 @@ var handlers = {
 // There should be a li element for every todo
 // Each li element should contain .todoText
 // Each li element should show .completed
+// view.displayTodos should use forEach
 var view = {
   displayTodos: function() {
-
     var todosUl = document.querySelector('ul');
     todosUl.innerHTML = '';
-
-    for (var i = 0; i < todoList.todos.length; i++) {
+    todoList.todos.forEach(function(todo, position) {
       var todoLi = document.createElement('li');
-      var todo = todoList.todos[i];
       var todoTextWithCompletion = '';
 
       if (todo.completed === true) {
@@ -99,13 +101,12 @@ var view = {
       } else {
         todoTextWithCompletion = '( ) ' + todo.todoText;
       }
-      // Each li should have an id that has the todo position
-      todoLi.id = i;
+
+      todoLi.id = position;
       todoLi.textContent = todoTextWithCompletion;
-      // There should be a delete button for each todo
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
-    }
+    }, this);
   },
   // There should be a way to create delete buttons
   createDeleteButton: function() {
