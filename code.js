@@ -99,9 +99,34 @@ var view = {
       } else {
         todoTextWithCompletion = '( ) ' + todo.todoText;
       }
-
+      // Each li should have an id that has the todo position
+      todoLi.id = i;
       todoLi.textContent = todoTextWithCompletion;
+      // There should be a delete button for each todo
+      todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
     }
+  },
+  // There should be a way to create delete buttons
+  createDeleteButton: function() {
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteButton';
+    return deleteButton;
+  },
+
+  setUpEventListeners: function() {
+    var todosUl = document.querySelector('ul');
+    todosUl.addEventListener('click', function(event) {
+      var elementClicked = event.target;
+      if (elementClicked.className === 'deleteButton') {
+        // Delete buttons should have access to the todo id
+        // Clicking delete should update todoList.todos and the DOM
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+    });
   }
+
 };
+
+view.setUpEventListeners();
